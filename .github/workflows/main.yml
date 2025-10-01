@@ -20,10 +20,13 @@ jobs:
           openjdk-11-jdk \
           git \
           zip \
-          unzip
+          unzip \
+          build-essential
         
-    - name: Install Buildozer
-      run: pip3 install buildozer
+    - name: Install Python packages
+      run: |
+        pip3 install buildozer
+        pip3 install cython==0.29.33
         
     - name: Build APK
       run: buildozer android debug
