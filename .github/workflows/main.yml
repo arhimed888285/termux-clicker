@@ -15,5 +15,5 @@ jobs:
     - name: Build APK with Buildozer
       uses: ArtemSBulgakov/buildozer-action@v1
       with:
-        buildozer-version: stable
+        buildozer_version: stable
         command: buildozer android debug
