@@ -6,9 +6,10 @@ from kivy.uix.label import Label
 class Clicker(App):
     def build(self):
         self.count = 0
-        layout = BoxLayout(orientation='vertical')
-        self.label = Label(text='0', font_size=100)
-        btn = Button(text='CLICK', font_size=50, on_press=self.click)
+        layout = BoxLayout(orientation='vertical', padding=50, spacing=20)
+        self.label = Label(text='0', font_size=100, color=[1,0,0,1])
+        btn = Button(text='CLICK!', font_size=50, size_hint_y=0.5, background_color=[0,1,0,1])
+        btn.bind(on_press=self.click)
         layout.add_widget(self.label)
         layout.add_widget(btn)
         return layout
@@ -17,4 +18,5 @@ class Clicker(App):
         self.count += 1
         self.label.text = str(self.count)
 
-Clicker().run()
+if __name__ == '__main__':
+    Clicker().run()
