@@ -1,0 +1,17 @@
+name: Build APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build APK
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip python3-venv
+        pip3 install buildozer
+        buildozer android debug
+    - uses: actions/upload-artifact@v4
+      with:
+        name: termux-clicker-apk
+        path: bin/*.apk
