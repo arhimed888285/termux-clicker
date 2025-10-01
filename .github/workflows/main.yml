@@ -29,15 +29,14 @@ jobs:
           libncurses5-dev libncursesw5-dev \
           cmake \
           libffi-dev libssl-dev \
-          libsqlite3-dev \
-          libjpeg-dev libtiff-dev libpng-dev
+          libsqlite3-dev
         
     - name: Install Buildozer
       run: pip install buildozer
         
     - name: Build APK with Buildozer
       run: |
-        buildozer init
+        buildozer android clean
         buildozer android debug
         
     - name: Upload APK artifact
