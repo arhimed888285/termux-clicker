@@ -1,48 +1,19 @@
-name: Build Android APK
-
-on:
-  push:
-    branches: [ main ]
-
+name: Build APK
+on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          python3-pip python3-dev \
-          openjdk-11-jdk \
-          git zip unzip wget \
-          build-essential \
-          libffi-dev libssl-dev \
-          libjpeg-dev libtiff-dev libpng-dev \
-          autoconf libtool pkg-config \
-          cmake ninja-build
-        
-    - name: Install Python packages
-      run: |
-        pip3 install buildozer
-        pip3 install cython==0.29.33
-        
-    - name: Accept Android licenses
-      run: |
-        mkdir -p ~/.android
-        touch ~/.android/repositories.cfg
-        yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses || true
-        
+    - uses: actions/checkout@v4
     - name: Build APK
       run: |
-        buildozer android clean
+        sudo apt update
+        sudo apt install -y python3-pip python3-venv
+        pip3 install buildozer
+        buildozer init
+        sed -i 's/requirements = .*/requirements = python3,kivy/' buildozer.spec
         buildozer android debug
-        
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v4
       with:
-        name: termux-clicker-apk
+        name: app
         path: bin/*.apk
